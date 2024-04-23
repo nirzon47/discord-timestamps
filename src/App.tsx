@@ -1,9 +1,11 @@
+import Header from './components/custom/Header'
+import Main from './components/custom/Main'
+
 const App = () => {
 	return (
-		<div className='w-screen min-h-screen text-white bg-zinc-900 p-4'>
-			<h1 className='text-2xl md:text-3xl font-semibold text-center font-mono'>
-				Discord Timestamp Generator
-			</h1>
+		<div className='min-h-screen w-screen bg-zinc-900 px-4 py-8 text-white'>
+			<Header />
+			<Main />
 		</div>
 	)
 }
