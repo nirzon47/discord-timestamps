@@ -14,15 +14,18 @@ interface Props {
 	setDate: React.Dispatch<React.SetStateAction<Date | undefined>>
 	setTime: React.Dispatch<React.SetStateAction<string | undefined>>
 	setFormat: React.Dispatch<React.SetStateAction<string | undefined>>
+	setOutput: React.Dispatch<React.SetStateAction<string | undefined>>
 }
 
 const Inputs = (props: Props) => {
 	const handleTimeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
 		props.setTime(e.target.value)
+		props.setOutput('')
 	}
 
 	const handleFormatSelect = (e: string) => {
 		props.setFormat(e)
+		props.setOutput('')
 	}
 
 	return (
@@ -36,7 +39,7 @@ const Inputs = (props: Props) => {
 						id='date'
 						date={props.date}
 						setDate={props.setDate}
-						className='-mt-4'
+						setOutput={props.setOutput}
 					/>
 				</div>
 				<div className='flex flex-col gap-px'>

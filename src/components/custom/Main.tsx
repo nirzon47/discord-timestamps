@@ -1,22 +1,58 @@
 import { useState } from 'react'
 import Inputs from './Inputs'
-
-const formatExamples: Record<string, string> = {
-	relative: '2 days ago',
-	shortTime: '2:30 PM',
-	longTime: '2:30:45 PM',
-	shortDate: '02/02/2023',
-	longDate: 'February 2, 2023',
-	longDateShortTime: '2 February 2023 2:30 PM',
-	full: 'Friday, February 2, 2023, 2:30:45 PM',
-}
+import { Button } from '../ui/button'
 
 const Main = () => {
 	const [date, setDate] = useState<Date>()
 	const [time, setTime] = useState<string>()
 	const [format, setFormat] = useState<string>()
+	const [output, setOutput] = useState<string>()
 
-	console.log(time, format)
+	const generateTimestamp = () => {
+		if (!date || !time || !format) return
+
+		const newDate = date
+		const [hours, minutes] = time.toString().split(':')
+
+		newDate?.setHours(Number(hours))
+		newDate?.setMinutes(Number(minutes))
+
+		const epoch = Math.floor(newDate.getTime() / 1000)
+
+		let outputEpoch
+		switch (format) {
+			case 'relative':
+				outputEpoch = `<t:${epoch}:R>`
+				navigator.clipboard.writeText(outputEpoch)
+				break
+			case 'shortTime':
+				outputEpoch = `<t:${epoch}:t>`
+				navigator.clipboard.writeText(outputEpoch)
+				break
+			case 'longTime':
+				outputEpoch = `<t:${epoch}:T>`
+				navigator.clipboard.writeText(outputEpoch)
+				break
+			case 'shortDate':
+				outputEpoch = `<t:${epoch}:d>`
+				navigator.clipboard.writeText(outputEpoch)
+				break
+			case 'longDate':
+				outputEpoch = `<t:${epoch}:D>`
+				navigator.clipboard.writeText(outputEpoch)
+				break
+			case 'longDateShortTime':
+				outputEpoch = `<t:${epoch}:f>`
+				navigator.clipboard.writeText(outputEpoch)
+				break
+			case 'full':
+				outputEpoch = `<t:${epoch}:F>`
+				navigator.clipboard.writeText(outputEpoch)
+				break
+		}
+
+		setOutput(outputEpoch)
+	}
 
 	return (
 		<main className='grid justify-center'>
@@ -25,12 +61,21 @@ const Main = () => {
 				setDate={setDate}
 				setTime={setTime}
 				setFormat={setFormat}
+				setOutput={setOutput}
 			/>
-			<div className='mt-4 h-8 text-center'>
-				{format && (
-					<p className='text-lg opacity-80'>{formatExamples[format]}</p>
-				)}
-			</div>
+			<Button
+				className='mt-4 bg-blue-950 text-white hover:bg-blue-800'
+				onClick={generateTimestamp}
+			>
+				Generate & Copy
+			</Button>
+			{output && (
+				<>
+					<pre className='my-4 bg-black/20 text-center font-mono'>
+						{output}
+					</pre>
+				</>
+			)}
 		</main>
 	)
 }
