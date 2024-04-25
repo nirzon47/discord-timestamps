@@ -9,7 +9,10 @@ const Main = () => {
 	const [output, setOutput] = useState<string>()
 
 	const generateTimestamp = () => {
-		if (!date || !time || !format) return
+		if (!date || !time || !format) {
+			setOutput('Fields empty')
+			return
+		}
 
 		const newDate = date
 		const [hours, minutes] = time.toString().split(':')
@@ -71,7 +74,7 @@ const Main = () => {
 			</Button>
 			{output && (
 				<>
-					<pre className='my-4 bg-black/20 text-center font-mono'>
+					<pre className='my-4 bg-black/20 py-1 text-center font-mono'>
 						{output}
 					</pre>
 				</>
