@@ -48,11 +48,13 @@
 @font-face {
 	font-family: 'Geist';
 	src: url('./assets/font/GeistVF.ttf') format('truetype');
+	font-display: swap;
 }
 
 @font-face {
 	font-family: 'Geist-Mono';
 	src: url('./assets/font/GeistMonoVF.ttf') format('truetype');
+	font-display: swap;
 }
 
 [type='time']::-webkit-calendar-picker-indicator {
